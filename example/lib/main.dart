@@ -11,11 +11,17 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  void enterFullScreen(FullScreenMode fullScreenMode) async {
+  Future<void> enterFullScreen(FullScreenMode fullScreenMode) async {
     await FullScreen.enterFullScreen(fullScreenMode);
   }
 
-  void exitFullScreen() async {
+  Future<void> isFullScreen() async {
+    final isFullScreen = await FullScreen.isFullScreen;
+    debugPrint(
+        'FullScreenPlugin: App screen full screen: $isFullScreen');
+  }
+
+  Future<void> exitFullScreen() async {
     await FullScreen.exitFullScreen();
   }
 
@@ -29,12 +35,14 @@ class _MyAppState extends State<MyApp> {
             FloatingActionButton(
               onPressed: () async {
                 enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
+                await isFullScreen();
               },
               child: new Icon(Icons.fullscreen),
             ),
             FloatingActionButton(
               onPressed: () async {
-                exitFullScreen();
+                 exitFullScreen();
+                await isFullScreen();
               },
               child: new Icon(Icons.fullscreen_exit),
             ),
