@@ -17,8 +17,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> isFullScreen() async {
     final isFullScreen = await FullScreen.isFullScreen;
-    debugPrint(
-        'FullScreenPlugin: App screen full screen: $isFullScreen');
+    debugPrint('FullScreenPlugin: App screen full screen: $isFullScreen');
   }
 
   Future<void> exitFullScreen() async {
@@ -27,6 +26,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    isFullScreen();
+
     return MaterialApp(
       home: Scaffold(
         floatingActionButton: Row(

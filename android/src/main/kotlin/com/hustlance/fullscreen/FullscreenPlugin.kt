@@ -14,7 +14,12 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
+import android.util.DisplayMetrics
+import android.view.WindowManager
 
+
+
+val TAG: String = "FullScreenPlugin:"
 
 /** FullscreenPlugin */
 public class FullscreenPlugin : FlutterPlugin, MethodCallHandler, ActivityAware  {
@@ -22,13 +27,13 @@ public class FullscreenPlugin : FlutterPlugin, MethodCallHandler, ActivityAware 
     private lateinit var channel: MethodChannel
 
     private lateinit var activity: Activity
-    private var isFullScreen : Boolean = false
+    private var screenHeight : Double = 0.0
+
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "fullscreen")
         channel.setMethodCallHandler(this);
     }
-
 
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
@@ -46,8 +51,8 @@ public class FullscreenPlugin : FlutterPlugin, MethodCallHandler, ActivityAware 
             }
             "exitFullScreen" -> {
                 exitFullScreen()
-            } "status" -> {
-            result.success(isFullScreen)
+            } "getHeight" -> {
+            result.success(screenHeight)
         }
             else -> {
                 result.notImplemented()
@@ -61,7 +66,7 @@ public class FullscreenPlugin : FlutterPlugin, MethodCallHandler, ActivityAware 
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         this.activity = binding.activity
-        status()
+        getHeight()
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
@@ -77,21 +82,16 @@ public class FullscreenPlugin : FlutterPlugin, MethodCallHandler, ActivityAware 
     }
 
 
-    private fun status() {
-   activity.window.decorView.setOnSystemUiVisibilityChangeListener { visibility ->
-            if (visibility and View.SYSTEM_UI_FLAG_FULLSCREEN == 0) {
-                // TODO: The system bars are visible. Make any desired
-                Log.i("System_bar", "System bar visible")
+    private fun getHeight() {
+        val displayMetrics = DisplayMetrics()
+        activity.windowManager
+                .defaultDisplay
+                .getRealMetrics(displayMetrics)
 
-                this.isFullScreen = false
-                print(isFullScreen)
-            } else {
-                // TODO: The system bars are NOT visible. Make any desired
-                Log.i("System_bar", "System bar hidden")
-                this.isFullScreen = true
-                print(isFullScreen)
-            }
-        }
+        val widthPx = displayMetrics.widthPixels
+        val heightPx = displayMetrics.heightPixels
+        // Return screen physical height
+        this.screenHeight =  heightPx.toDouble()
 
     }
 
