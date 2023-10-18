@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io' show Platform;
 import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 class FullScreen {
@@ -55,6 +56,20 @@ class FullScreen {
     } else {
       return false;
     }
+  }
+
+
+  /// to get the current status of the SystemUI
+  static Future<double?> get getDeviceHeight async {
+    double? nativeHeight;
+    try {
+      nativeHeight = await _channel.invokeMethod("getHeight");
+    } catch (e) {
+      print(e);
+    }
+    //debugPrint('FlutterScreen: nativeHeight $nativeHeight');
+
+    return nativeHeight;
   }
 
   /// Exit full screen
