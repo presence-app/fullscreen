@@ -9,7 +9,7 @@ class FullScreen {
   /// To enable fullscreen mode, pass the fullscreen mode as an argument the the enterFullScreen method of the FullScreen class.
   static Future<void> enterFullScreen(FullScreenMode fullScreenMode) async {
     if (Platform.isIOS) {
-      SystemChrome.setEnabledSystemUIOverlays([]);
+     return;
     } else if (Platform.isAndroid) {
       try {
         if (fullScreenMode == FullScreenMode.EMERSIVE) {
@@ -39,7 +39,7 @@ class FullScreen {
   /// Exit full screen
   static Future<void> exitFullScreen() async {
     if (Platform.isIOS) {
-      SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+      return;
     } else if (Platform.isAndroid) {
       try {
         await _channel.invokeMethod('exitFullScreen');
