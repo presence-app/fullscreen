@@ -86,7 +86,8 @@ public class FullscreenPlugin : FlutterPlugin, MethodCallHandler, ActivityAware 
         val displayMetrics = DisplayMetrics()
         activity.windowManager
                 .defaultDisplay
-                .getRealMetrics(displayMetrics)
+                .getMetrics(displayMetrics)
+                //.getRealMetrics(displayMetrics)
 
         val widthPx = displayMetrics.widthPixels
         val heightPx = displayMetrics.heightPixels
