@@ -2,7 +2,7 @@ group 'com.hustlance.fullscreen'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.6.20'
+    ext.kotlin_version = '1.8.0'
     repositories {
         google()
         jcenter()
@@ -23,10 +23,7 @@ rootProject.allprojects {
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'org.jetbrains.kotlin.android.extensions'
-androidExtensions {
-    experimental = true
-}
+
 
 android {
     compileSdkVersion 33
@@ -40,6 +37,10 @@ android {
     lintOptions {
         disable 'InvalidPackage'
     }
+    buildFeatures {
+        viewBinding true
+    }
+
 }
 
 dependencies {
