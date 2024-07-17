@@ -26,13 +26,14 @@ apply plugin: 'kotlin-android'
 
 
 android {
-    compileSdkVersion 33
+    compileSdkVersion 34
+    namespace = "com.hustlance.fullscreen"
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
     defaultConfig {
-        minSdkVersion 24
+        minSdkVersion 26
     }
     lintOptions {
         disable 'InvalidPackage'
