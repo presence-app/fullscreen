@@ -5,8 +5,7 @@ buildscript {
     ext.kotlin_version = '1.8.0'
     repositories {
         google()
-        // jcenter() is deprecated, consider replacing or removing it if possible
-        mavenCentral()
+        jcenter()
     }
 
     dependencies {
@@ -15,11 +14,10 @@ buildscript {
     }
 }
 
-allprojects {
+rootProject.allprojects {
     repositories {
         google()
-        // Same note about jcenter()
-        mavenCentral()
+        jcenter()
     }
 }
 
@@ -30,20 +28,27 @@ android {
     compileSdkVersion 34
     namespace = "com.hustlance.fullscreen"
 
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    defaultConfig {
+        minSdkVersion 26
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
-    defaultConfig {
-        minSdkVersion 26
-    }
+
     lintOptions {
         disable 'InvalidPackage'
     }
+
     buildFeatures {
         viewBinding true
     }
