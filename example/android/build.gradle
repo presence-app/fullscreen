@@ -2,7 +2,8 @@ buildscript {
     ext.kotlin_version = '1.8.0'
     repositories {
         google()
-        jcenter()
+        // jcenter() is deprecated, replace with mavenCentral() if possible
+        mavenCentral()
     }
 
     dependencies {
@@ -14,15 +15,16 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        // same as above: prefer mavenCentral()
+        mavenCentral()
     }
 }
 
 rootProject.buildDir = '../build'
+
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
-}
-subprojects {
+    // This makes the subprojects build depend on :app evaluation
     project.evaluationDependsOn(':app')
 }
 

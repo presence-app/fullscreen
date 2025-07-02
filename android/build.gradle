@@ -5,7 +5,8 @@ buildscript {
     ext.kotlin_version = '1.8.0'
     repositories {
         google()
-        jcenter()
+        // jcenter() is deprecated, consider replacing or removing it if possible
+        mavenCentral()
     }
 
     dependencies {
@@ -14,20 +15,25 @@ buildscript {
     }
 }
 
-rootProject.allprojects {
+allprojects {
     repositories {
         google()
-        jcenter()
+        // Same note about jcenter()
+        mavenCentral()
     }
 }
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
-
 android {
     compileSdkVersion 34
     namespace = "com.hustlance.fullscreen"
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -41,7 +47,6 @@ android {
     buildFeatures {
         viewBinding true
     }
-
 }
 
 dependencies {
